@@ -1,0 +1,56 @@
+<div class="container mx-auto px-4 py-10">
+  <%- include('../partials/message') %>
+
+  <h1 class="text-3xl font-bold text-blue-800 mb-6 text-center">Contact Us</h1>
+  <div class="bg-white shadow rounded-lg p-6 max-w-lg mx-auto">
+    <form action="/contact" method="POST" class="space-y-4">
+      <div>
+        <label for="name" class="block text-gray-700 font-semibold mb-1"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-gray-700 font-semibold mb-1"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        />
+      </div>
+      <div>
+        <label for="message" class="block text-gray-700 font-semibold mb-1"
+          >Message</label
+        >
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 resize-none"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded transition"
+      >
+        Send Message
+      </button>
+    </form>
+    <div class="mt-8 text-center text-gray-600">
+      <p><strong>Email:</strong> support@rucobank.com</p>
+      <p><strong>Phone:</strong> +233 20 123 4567</p>
+      <p><strong>Address:</strong> 123 RucoBank Ave, Accra, Ghana</p>
+    </div>
+  </div>
+</div>

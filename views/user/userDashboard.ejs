@@ -1,0 +1,538 @@
+<div class="flex min-h-screen w-[90%] m-auto text-base">
+  <aside
+    class="w-90 text-blue-800 p-6 shadow-lg flex flex-col h-[70vh] rounded-2xl border-blue-300 hidden sm:block"
+  >
+    <div class="text-2xl font-bold mb-8 text-left">Rucobank</div>
+    <div class="space-y-4 flex-grow">
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left active"
+        data-tab="overview"
+      >
+        <i class="fas fa-tachometer-alt text-blue-900"></i>
+        <span>Dashboard</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="details"
+      >
+        <i class="fas fa-user-circle text-blue-900"></i>
+        <span>Account Details</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="deposit"
+      >
+        <i class="fas fa-money-bill-wave text-blue-900"></i>
+        <span>Deposit</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="withdraw"
+      >
+        <i class="fas fa-cash-register text-blue-900"></i>
+        <span>Withdraw</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="transfer"
+      >
+        <i class="fas fa-exchange-alt text-blue-900"></i>
+        <span>Transfer</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="transactions"
+      >
+        <i class="fas fa-history text-blue-900"></i>
+        <span>Transaction History</span>
+      </button>
+      <button
+        class="sidebar-item cursor-pointer w-full hover:text-gray-950 flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-200 transition duration-200 text-left"
+        data-tab="add-account"
+      >
+        <i class="fas fa-plus-circle text-blue-900"></i>
+        <span>Add Account</span>
+      </button>
+    </div>
+    <div class="mt-8 text-center">
+      <a
+        href="/user/logout"
+        class="min-w-full inline-block bg-red-600 hover:bg-red-900 text-white px-6 py-2 rounded-lg transition font-medium"
+      >
+        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+      </a>
+    </div>
+  </aside>
+
+  <div class="flex-1 p-8 overflow-y-auto justify-center items-center">
+    <h1 class="text-3xl font-bold text-blue-900 mb-8"
+      >Welcome, <%= user.fullName %>!</h1
+    >
+    <%- include('../partials/message') %>
+    <!-- dashboard aside tab contents goes here -->
+    <div id="tab-contents">
+      <div class="tab-content" id="overview">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div
+            class="bg-gradient-to-r bg-blue-900 text-white p-6 rounded-lg shadow-xl"
+          >
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-semibold">Current Balance</h3>
+              <img
+                src="/uploads/client/<%= user.image %>"
+                alt="Profile Image"
+                class="w-10 h-10 object-cover rounded-full border border-gray-300"
+              />
+            </div>
+            <p class="text-2xl sm:text-5xl font-extrabold">
+              GH₵ <%= user.accounts && user.accounts.length > 0 ?
+              user.accounts.reduce((sum, acc) => sum + (acc.balance || 0),
+              0).toFixed(2) : '0.00' %>
+            </p>
+            <p class="opacity-90 mt-2"
+              >As of <%= new Date().toLocaleDateString('en-US', { year:
+              'numeric', month: 'long', day: 'numeric' }) %></p
+            >
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold text-gray-800"
+                >Account Number</h3
+              >
+              <i class="fas fa-credit-card text-blue-900 fa-lg"></i>
+            </div>
+            <p class="font-bold text-blue-900"><%= user.accountNumber %></p>
+            <p class="text-gray-500 mt-2">Your primary account number</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold text-gray-800">Customer ID</h3>
+              <i class="fas fa-id-badge text-blue-900 fa-lg"></i>
+            </div>
+            <p class="font-bold text-blue-900"><%= user.customerId %></p>
+            <p class="text-gray-500 mt-2">Your unique customer identifier</p>
+          </div>
+        </div>
+
+        <!-- quick tabs below the user dashboard code here -->
+        <div class="bg-white p-8 rounded-lg shadow-md">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Quick Actions</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <button
+              class="cursor-pointer flex flex-col items-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg shadow transition duration-200"
+              data-tab="deposit"
+            >
+              <i class="fas fa-money-check-alt text-blue-900 text-4xl mb-3"></i>
+              <span class="font-semibold text-gray-800">Deposit Funds</span>
+            </button>
+            <button
+              class="flex flex-col cursor-pointer items-center p-4 bg-red-50 hover:bg-red-100 rounded-lg shadow transition duration-200"
+              data-tab="withdraw"
+            >
+              <i class="fas fa-coins text-red-600 text-4xl mb-3"></i>
+              <span class="font-semibold text-gray-800">Withdraw Funds</span>
+            </button>
+            <button
+              class="flex flex-col items-center cursor-pointer p-4 bg-green-50 hover:bg-green-100 rounded-lg shadow transition duration-200"
+              data-tab="transfer"
+            >
+              <i class="fas fa-paper-plane text-green-600 text-4xl mb-3"></i>
+              <span class="font-semibold text-gray-800">Transfer Funds</span>
+            </button>
+            <button
+              class="flex flex-col items-center cursor-pointer p-4 bg-purple-50 hover:bg-purple-100 rounded-lg shadow transition duration-200"
+              data-tab="transactions"
+            >
+              <i class="fas fa-list-alt text-purple-600 text-4xl mb-3"></i>
+              <span class="font-semibold text-gray-800">View Transactions</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- aside user details tab info here -->
+      <div class="tab-content hidden" id="details">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-4 flex items-center"
+            >
+              <i class="fas fa-user mr-3 text-blue-900"></i> Personal
+              Information
+            </h3>
+            <ul class="space-y-3 text-gray-700">
+              <li><strong>Full Name:</strong> <%= user.fullName %></li>
+              <li><strong>Email:</strong> <%= user.email %></li>
+              <li><strong>Phone:</strong> <%= user.phone %></li>
+              <li><strong>Address:</strong> <%= user.address %></li>
+              <li>
+                <strong>Date of Birth:</strong> <%= user.dateOfBirth ? (typeof
+                user.dateOfBirth.toLocaleDateString === 'function' ?
+                user.dateOfBirth.toLocaleDateString('en-US', { year: 'numeric',
+                month: 'long', day: 'numeric' }) : user.dateOfBirth) : "N/A" %>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3
+              class="text-xl font-semibold text-gray-800 mb-4 flex items-center"
+            >
+              <i class="fas fa-info-circle mr-3 text-blue-500"></i> Account
+              Information
+            </h3>
+            <ul class="space-y-3 text-gray-700">
+              <li
+                ><strong>Customer ID: </strong> <%= user.customerId %>
+                <strong>Account NO: </strong> <%= user.accountNumber %></li
+              >
+              <% if (user.accounts && user.accounts.length > 0) { %> <%
+              user.accounts.forEach(account => { %>
+              <li class="text-base list-disc ml-5"
+                ><strong>Account Type: </strong> <%=
+                account.type.charAt(0).toUpperCase() +
+                account.type.slice(1).toLowerCase() %><strong> Balance:</strong>
+                GH₵ <%= account.balance ? account.balance.toFixed(2) : '0.00' %>
+              </li>
+              <% }) %> <% } else { %>
+              <li>No accounts found.</li>
+              <% } %>
+              <a href="/user/edit"
+                ><li class="font-semibold text-red-400">Edit My Info</li></a
+              >
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- deposite aside tab content goes here -->
+      <div class="tab-content hidden" id="deposit">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Deposit Funds</h3>
+          <form action="/user/deposit" method="POST" class="space-y-4">
+            <div>
+              <label
+                for="accountType"
+                class="block text-gray-700 font-medium mb-1"
+                >Account:</label
+              >
+              <select
+                class="w-full border mb-3 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                name="account"
+                id="account"
+                required
+              >
+                <option value="" disabled selected
+                  >Choose account to deposit into</option
+                >
+                <% if (user.accounts && user.accounts.length > 0) { %> <%
+                user.accounts.forEach(account => { %>
+                <option value="<%= account.number %>">
+                  <%= account.type.charAt(0).toUpperCase() +
+                  account.type.slice(1).toLowerCase() %> - <%= account.number %>
+                </option>
+                <% }) %> <% } else { %>
+                <option value="" disabled>No accounts found</option>
+                <% } %>
+              </select>
+
+              <label
+                for="deposit-amount"
+                class="block text-gray-700 font-medium mb-1"
+                >Amount:</label
+              >
+              <input
+                type="number"
+                id="deposit-amount"
+                name="amount"
+                min="0.01"
+                step="0.01"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-900"
+                placeholder="e.g., 100.00"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-200 transition duration-200 font-semibold"
+            >
+              <i class="fas fa-plus-circle mr-2"></i> Deposit
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- widthdraw aside tab content goes here -->
+      <div class="tab-content hidden" id="withdraw">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Withdraw Funds</h3>
+          <form action="/user/withdraw" method="POST" class="space-y-4">
+            <div>
+              <label
+                for="withdraw-amount"
+                class="block text-gray-700 font-medium mb-1"
+              >
+                Amount:
+              </label>
+              <input
+                type="number"
+                id="withdraw-amount"
+                name="amount"
+                min="0.01"
+                step="0.01"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., 50.00"
+                required
+              />
+              <label
+                for="accountType"
+                class="block text-gray-700 font-medium mb-1 mt-3"
+              >
+                Account:
+              </label>
+              <select
+                class="w-full border mb-3 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                name="account"
+                id="account"
+                required
+              >
+                <option value="" disabled selected
+                  >Choose account to withdraw from</option
+                >
+                <% if (user.accounts && user.accounts.length > 0) { %> <%
+                user.accounts.forEach(account => { %>
+                <option value="<%= account.number %>">
+                  <%= account.type.charAt(0).toUpperCase() +
+                  account.type.slice(1).toLowerCase() %> - <%= account.number %>
+                </option>
+                <% }) %> <% } else { %>
+                <option value="" disabled>No accounts found</option>
+                <% } %>
+              </select>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition duration-200 font-semibold"
+            >
+              <i class="fas fa-minus-circle mr-2"></i> Withdraw
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <%# transfer funds aside tab content goes here %>
+      <div class="tab-content hidden" id="transfer">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Transfer Funds</h3>
+          <form action="/transfer" method="POST" class="space-y-4">
+            <input
+              type="hidden"
+              name="fromAccountNumber"
+              value="<%= user.accountNumber %>"
+            />
+            <div>
+              <label
+                for="recipient-account"
+                class="block text-gray-700 font-medium mb-1"
+                >Recipient Account Number:</label
+              >
+              <input
+                type="text"
+                id="recipient-account"
+                name="toAccountNumber"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., 1234567890"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="transfer-amount"
+                class="block text-gray-700 font-medium mb-1"
+                >Amount:</label
+              >
+              <input
+                type="number"
+                id="transfer-amount"
+                name="amount"
+                min="0.01"
+                step="0.01"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., 200.00"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="transfer-memo"
+                class="block text-gray-700 font-medium mb-1"
+                >Memo (Optional):</label
+              >
+              <input
+                type="text"
+                id="transfer-memo"
+                name="memo"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., For groceries"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 font-semibold"
+            >
+              <i class="fas fa-paper-plane mr-2"></i> Transfer
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <%#transaction history aside tab content goes here %>
+      <div class="tab-content hidden" id="transactions">
+        <div class="bg-white p-8 rounded-lg shadow-md">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6"
+            >Recent Transactions</h3
+          >
+          <% if (user.transactionHistory && user.transactionHistory.length > 0)
+          { %>
+          <div class="overflow-x-auto">
+            <table
+              class="min-w-full bg-white border border-gray-200 rounded-lg"
+            >
+              <thead>
+                <tr class="bg-gray-50 text-gray-600 uppercase leading-normal">
+                  <th class="py-3 px-6 text-left">Date</th>
+                  <th class="py-3 px-6 text-left">Type</th>
+                  <th class="py-3 px-6 text-left">Description</th>
+                  <th class="py-3 px-6 text-right">Amount</th>
+                  <th class="py-3 px-6 text-right">By</th>
+                  <th class="py-3 px-6 text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700 font-light">
+                <% user.transactionHistory.forEach(transaction => { %>
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-left whitespace-nowrap">
+                    <%= new Date(transaction.date).toLocaleString('en-US', {
+                    year: 'numeric', month: 'short', day: 'numeric', hour:
+                    'numeric', minute: '2-digit', hour12: true }) %>
+                  </td>
+                  <td class="py-3 px-6 text-left">
+                    <span
+                      class="py-1 px-3 rounded-full text-xs font-semibold <%= transaction.type === 'Deposit' ? 'bg-green-200 text-green-800' : transaction.type === 'Withdrawal' ? 'bg-red-200 text-red-800' : 'bg-blue-200 text-blue-800' %>"
+                    >
+                      <%= transaction.type %>
+                    </span>
+                  </td>
+                  <td class="py-3 px-6 text-left"
+                    ><%= transaction.description %></td
+                  >
+                  <td
+                    class="py-3 px-6 text-right font-medium <%= transaction.type === 'Deposit' ? 'text-green-600' : 'text-red-600' %>"
+                  >
+                    <%= transaction.type === 'Deposit' ? '+' : '-' %>GH₵<%=
+                    transaction.amount.toFixed(2) %>
+                  </td>
+                  <td class="py-3 px-6 text-right font-medium">
+                    <%= transaction.By %>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span
+                      class="relative inline-block px-3 py-1 font-semibold leading-tight"
+                    >
+                      <span
+                        aria-hidden="true"
+                        class="absolute inset-0 opacity-50 rounded-full <%= transaction.status === 'Completed' ? 'bg-green-200' : 'bg-yellow-200' %>"
+                      ></span>
+                      <span
+                        class="relative text-xs <%= transaction.status === 'Completed' ? 'text-green-900' : 'text-yellow-900' %>"
+                      >
+                        <%= transaction.status %>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% } else { %>
+          <p class="text-gray-600 text-center py-4">No transactions found.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- open new account aside tab content goes here -->
+      <div class="tab-content hidden" id="add-account">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6"
+            >Open New Account</h3
+          >
+          <form action="/user/add-account" method="POST" class="space-y-4">
+            <input
+              type="hidden"
+              name="customerId"
+              value="<%= user.customerId %>"
+            />
+            <div>
+              <label
+                for="account-type"
+                class="block text-gray-700 font-medium mb-1"
+                >Account Type:</label
+              >
+              <select
+                id="account-type"
+                name="accountType"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">Select type</option>
+                <% const allTypes = ["Savings", "Checking", "Current", "loan"];
+                const userTypes = user.accounts ? user.accounts.map(acc =>
+                acc.type.toLowerCase()) : []; allTypes.forEach(type => { if
+                (!userTypes.includes(type.toLowerCase())) { %>
+                <option value="<%= type %>"><%= type %></option>
+                <% } }); %>
+              </select>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-800 transition duration-200 font-semibold"
+            >
+              <i class="fas fa-plus-circle mr-2"></i> Add Account
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%#tab switching content script logic goes here %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabButtons = document.querySelectorAll("[data-tab]");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const tab = button.getAttribute("data-tab");
+
+          // Remove 'active' class from all buttons
+          tabButtons.forEach((btn) => btn.classList.remove("active"));
+
+          // Add 'active' class to clicked button
+          button.classList.add("active");
+
+          // Hide all tab contents
+          tabContents.forEach((content) => content.classList.add("hidden"));
+
+          // Show selected tab content
+          const activeTab = document.getElementById(tab);
+          if (activeTab) {
+            activeTab.classList.remove("hidden");
+          }
+        });
+      });
+    });
+  </script>
+</div>

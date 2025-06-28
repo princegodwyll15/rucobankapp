@@ -1,4 +1,4 @@
-const admin = require("../model/admin");
+const admin = require("../model/adminModel");
 const express = require("express");
 
 // Example: Get admin form data (edit as needed)

@@ -1,5 +1,4 @@
-const user = require("../model/user");
-const User = require("../model/user");
+const User = require("../model/useModel");
 const bcrypt = require("bcrypt");
 
 // *************************************
@@ -69,7 +68,7 @@ exports.getEditUserDetailsFormPage = async (req, res) => {
 // *************************************
 // user post controllers here
 // *************************************
-exports.getUserInfoFromForm = async (req, res) => {
+exports.registerNewUserForm = async (req, res) => {
   try {
     const image = req.file ? req.file.filename : null;
     const {
@@ -88,7 +87,6 @@ exports.getUserInfoFromForm = async (req, res) => {
     // Basic validation
     if (
       !fullName ||
-      !image ||
       !email ||
       !phone ||
       !address ||
@@ -126,23 +124,23 @@ exports.getUserInfoFromForm = async (req, res) => {
     // Create the first account object
     const accounts = [
       {
-        type: accountType,
-        number: accountNumber,
+        accountType: accountType,
+        accountNumber: accountNumber,
+        customerId: customerId,
         balance: 0,
+        interestRate: 0, 
       },
     ];
 
     const user = new User({
-      fullName,
+      fullName, 
       email,
       phone,
       address,
       dateOfBirth,
       accounts,
       password: hashedPassword,
-      customerId,
       image,
-      accountNumber,
     });
 
     await user.save();

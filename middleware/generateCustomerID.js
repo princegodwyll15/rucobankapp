@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../model/useModel");
 
 const generateCustomerID = async (req, res, next) => {
   // Find the user with the highest customerId

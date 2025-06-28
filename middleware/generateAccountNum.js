@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../model/useModel");
 
 // Generates a random 14-digit account number as a string
 function generateRandomAccountNumber() {

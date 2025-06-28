@@ -191,8 +191,8 @@
               user.accounts.forEach(account => { %>
               <li class="text-base list-disc ml-5"
                 ><strong>Account Type: </strong> <%=
-                account.type.charAt(0).toUpperCase() +
-                account.type.slice(1).toLowerCase() %><strong> Balance:</strong>
+                account.accountType.charAt(0).toUpperCase() +
+                account.accountType.slice(1).toLowerCase() %><strong> Balance:</strong>
                 GH₵ <%= account.balance ? account.balance.toFixed(2) : '0.00' %>
               </li>
               <% }) %> <% } else { %>
@@ -228,9 +228,9 @@
                 >
                 <% if (user.accounts && user.accounts.length > 0) { %> <%
                 user.accounts.forEach(account => { %>
-                <option value="<%= account.number %>">
-                  <%= account.type.charAt(0).toUpperCase() +
-                  account.type.slice(1).toLowerCase() %> - <%= account.number %>
+                <option value="<%= account.accountNumber %>">
+                  <%= account.accountType.charAt(0).toUpperCase() +
+                  account.accountType.slice(1).toLowerCase() %> - <%= account.accountType %>
                 </option>
                 <% }) %> <% } else { %>
                 <option value="" disabled>No accounts found</option>
@@ -302,9 +302,9 @@
                 >
                 <% if (user.accounts && user.accounts.length > 0) { %> <%
                 user.accounts.forEach(account => { %>
-                <option value="<%= account.number %>">
-                  <%= account.type.charAt(0).toUpperCase() +
-                  account.type.slice(1).toLowerCase() %> - <%= account.number %>
+                <option value="<%= account.accountNumber %>">
+                  <%= account.accountType.charAt(0).toUpperCase() +
+                  account.accountType.slice(1).toLowerCase() %> - <%= account.accountNumber %>
                 </option>
                 <% }) %> <% } else { %>
                 <option value="" disabled>No accounts found</option>
@@ -489,7 +489,7 @@
                 <option value="">Select type</option>
                 <% const allTypes = ["Savings", "Checking", "Current", "loan"];
                 const userTypes = user.accounts ? user.accounts.map(acc =>
-                acc.type.toLowerCase()) : []; allTypes.forEach(type => { if
+                acc.accountType.toLowerCase()) : []; allTypes.forEach(type => { if
                 (!userTypes.includes(type.toLowerCase())) { %>
                 <option value="<%= type %>"><%= type %></option>
                 <% } }); %>

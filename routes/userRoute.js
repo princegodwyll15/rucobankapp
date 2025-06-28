@@ -34,7 +34,7 @@ router.post(
   saveUserImageToUploads,
   generateCustomerID,
   generateAccountNum,
-  userController.getUserInfoFromForm
+  userController.registerNewUserForm
 );
 router.post("/user/login", userAuth, userController.userProcessLogInForm);
 router.post("/user/withdraw", userController.userWithDrawFromMyAccount);
